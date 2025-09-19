@@ -1,0 +1,1 @@
+// This is a placeholder Cairo contract for Starknet, which can be used for testing or as a template for further development.
