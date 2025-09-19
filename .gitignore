@@ -1,0 +1,70 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+dist/
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+Dockerfile
+*.pid
+
+# Hardhat
+artifacts/
+cache/
+coverage/
+*.coverage
+*.solcover.js
+*.solcover.json
+
+# Starknet
+starknet-artifacts/
+starknet-cache/
+
+# IDE-specific files
+.vscode/
+.idea/
+*.iml
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Git-specific files
+*.orig
+*.rej
+
+# AggSandbox-specific
+aggsandbox/.env
+aggsandbox/.env.example
+aggsandbox/cli/target/
+aggsandbox/cli/target/debug/
+aggsandbox/cli/target/release/
+aggsandbox/cli/Cargo.lock
+aggsandbox/cli/tests/*.log
+aggsandbox/cli/tests/*.tmp
+aggsandbox/test/contracts/
+aggsandbox/test/lib/
+aggsandbox/test/*.log
+aggsandbox/test/*.tmp
+
+# Miscellaneous
+*.swp
+*.swo
+*.bak
+*.tmp
