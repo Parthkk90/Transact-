@@ -1,4 +1,5 @@
 import express, { Router } from "express";
+import { ethers } from 'ethers';
 
 // Create Express router
 export const agglayerRouter = Router();
@@ -13,15 +14,24 @@ agglayerRouter.get("/", (req, res) => {
 });
 
 // Example route for bridging transactions
-agglayerRouter.post("/bridge", (req, res) => {
-  // This would contain the logic to interact with AggLayer bridge
-  const { sourceChain, targetChain, amount } = req.body;
+agglayerRouter.post("/bridge", async (req, res) => {
+  const { sourceChain, targetChain, amount, userAddress } = req.body;
   
-  // Mock response for now
-  res.json({
-    success: true,
-    message: `Transaction initiated from ${sourceChain} to ${targetChain}`,
-    amount,
-    txId: "0x" + Math.random().toString(16).slice(2) // Mock transaction ID
+  // Simulate notifying AggLayer (replace with real AggKit API call)
+  const aggkitResponse = await fetch('http://localhost:5577/bridge/send-message', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sourceChain: 'polygon',  // e.g., Polygon Amoy
+      targetChain: 'starknet',
+      message: { user: userAddress, amount },
+      contractAddress: '0xYourStarknetContractAddress'  // From deployment
+    })
   });
+  
+  if (aggkitResponse.ok) {
+    res.json({ success: true, message: 'Message relayed to Starknet' });
+  } else {
+    res.status(500).json({ error: 'Failed to relay' });
+  }
 });
