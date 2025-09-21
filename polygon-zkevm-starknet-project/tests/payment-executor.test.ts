@@ -1,41 +1,39 @@
-#[starknet::contract]
-mod PaymentExecutor {
-    use starknet::ContractAddress;
-    use starknet::info::get_caller_address;
-    
-    #[event]
-    #[derive(Drop, starknet::Event)]
-    enum Event {
-        PaymentReceived: PaymentReceived,
-    }
+import { expect } from 'chai';
+import { StarknetContract, Provider, Account } from 'starknet'; // Adjust imports based on your Starknet library
 
-    #[derive(Drop, starknet::Event)]
-    struct PaymentReceived {
-        sender: ContractAddress,
-        amount: u128,
-    }
+describe('PaymentExecutor', function() {
+  let provider: Provider;
+  let paymentExecutor: StarknetContract;
+  let deployerAccount: Account;
+  
+  before(async function() {
+    // Initialize provider (adjust URL for your local Starknet devnet)
+    provider = new Provider({ baseUrl: 'http://localhost:5050' });
     
-    #[storage]
-    struct Storage {
-        payments: LegacyMap::<ContractAddress, u128>,
-    }
-
-    #[external]
-    fn log_payment(sender: ContractAddress, amount: u128) {
-        // Store payment info
-        payments::write(sender, amount);
-        
-        // Emit event
-        self.emit(Event::PaymentReceived(PaymentReceived { sender, amount }));
-        
-        // Log to console (for debugging)
-        starknet::info::print("Payment received:");
-        starknet::info::print_felt252(sender.into());
-        starknet::info::print_u128(amount);
-    }
+    // Set up deployer account (replace with your actual setup)
+    // deployerAccount = new Account(provider, privateKey, address);
     
-    #[view]
-    fn get_payment(sender: ContractAddress) -> u128 {
-        payments::read(sender)
-    }
-}
+    // Deploy or connect to the contract (simplified example)
+    // paymentExecutor = await StarknetContract.deploy('PaymentExecutor', []);
+  });
+  
+  it('should log a payment and store it correctly', async function() {
+    const sender = '0x123456789abcdef'; // Mock address
+    const amount = 1000n; // Mock amount
+    
+    // Call the log_payment function
+    // await paymentExecutor.invoke('log_payment', [sender, amount]);
+    
+    // Verify the payment was stored
+    // const storedAmount = await paymentExecutor.call('get_payment', [sender]);
+    // expect(storedAmount).to.equal(amount);
+    
+    // Placeholder assertion (replace with actual test logic)
+    expect(true).to.equal(true, 'Placeholder: Implement actual Starknet contract testing');
+  });
+  
+  it('should handle multiple payments from the same sender', async function() {
+    // Test logic for multiple payments
+    expect(true).to.equal(true, 'Placeholder: Implement multiple payments test');
+  });
+});

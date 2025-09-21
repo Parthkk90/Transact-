@@ -1,7 +1,6 @@
 #[starknet::contract]
 mod PaymentExecutor {
     use starknet::ContractAddress;
-    use starknet::info::get_caller_address;
     
     #[event]
     #[derive(Drop, starknet::Event)]
@@ -21,9 +20,9 @@ mod PaymentExecutor {
     }
 
     #[external]
-    fn log_payment(sender: ContractAddress, amount: u128) {
+    fn log_payment(ref self: ContractState, sender: ContractAddress, amount: u128) {
         // Store payment info
-        payments::write(sender, amount);
+        self.payments.write(sender, amount);
         
         // Emit event
         self.emit(Event::PaymentReceived(PaymentReceived { sender, amount }));
@@ -35,7 +34,7 @@ mod PaymentExecutor {
     }
     
     #[view]
-    fn get_payment(sender: ContractAddress) -> u128 {
-        payments::read(sender)
+    fn get_payment(self: @ContractState, sender: ContractAddress) -> u128 {
+        self.payments.read(sender)
     }
 }
